@@ -18,7 +18,7 @@ import {
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 
-import { useSkillTreeStore } from '@/lib/store'
+import { useSkillTreeStore, type CustomChecklist } from '@/lib/store'
 import { getNodeStatus, getProgressPercent, getLevelInfo, XP_PER_NODE } from '@/lib/utils'
 import { computeAutoLayout } from '@/lib/autoLayout'
 import { allNodeTypes } from './CustomNode'
@@ -35,10 +35,15 @@ import type { SkillNodeData } from './CustomNode'
 interface Props {
   tree: SkillTree
   initialCompletedIds?: string[]
+  initialCheckedItemIds?: string[]
+  initialCustomChecklist?: CustomChecklist
   userRating?: number | null
   /** When true: hides FAB toolbar, sidebar, context menus, and modals (builder preview) */
   preview?: boolean
 }
+
+// Stable default so the hydration effect doesn't re-run on every render
+const EMPTY_CUSTOM_CHECKLIST: CustomChecklist = {}
 
 // ─── XP / level helpers ──────────────────────────────────────────────────────
 
@@ -260,10 +265,13 @@ const DIFF_STYLE: Record<string, string> = {
 
 // ─── component ───────────────────────────────────────────────────────────────
 
-export default function SkillCanvas({ tree, initialCompletedIds = [], userRating = null, preview = false }: Props) {
+export default function SkillCanvas({ tree, initialCompletedIds = [], initialCheckedItemIds = [], initialCustomChecklist = EMPTY_CUSTOM_CHECKLIST, userRating = null, preview = false }: Props) {
   const {
     completedNodeIds,
     setCompletedNodeIds,
+    setCheckedItemIds,
+    setCustomChecklist,
+    resetChecklist,
     setCurrentTree,
     canvasView,
     setSelectedNode,
@@ -374,6 +382,31 @@ export default function SkillCanvas({ tree, initialCompletedIds = [], userRating
       }
     }
   }, [tree, initialCompletedIds, setCurrentTree, setCompletedNodeIds])
+
+  // Same hydration strategy for checklists: server data first, then localStorage
+  useEffect(() => {
+    if (initialCheckedItemIds.length > 0 || Object.keys(initialCustomChecklist).length > 0) {
+      setCheckedItemIds(initialCheckedItemIds)
+      setCustomChecklist(initialCustomChecklist)
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(`checklist:${tree.treeId}`, JSON.stringify(initialCheckedItemIds))
+        localStorage.setItem(`checklist-custom:${tree.treeId}`, JSON.stringify(initialCustomChecklist))
+      }
+      return
+    }
+    let localChecked: string[] = []
+    let localCustom: CustomChecklist = {}
+    if (typeof window !== 'undefined') {
+      try {
+        localChecked = JSON.parse(localStorage.getItem(`checklist:${tree.treeId}`) ?? '[]') as string[]
+        localCustom = JSON.parse(localStorage.getItem(`checklist-custom:${tree.treeId}`) ?? '{}') as CustomChecklist
+      } catch {
+        // Ignore malformed localStorage data
+      }
+    }
+    setCheckedItemIds(localChecked)
+    setCustomChecklist(localCustom)
+  }, [tree.treeId, initialCheckedItemIds, initialCustomChecklist, setCheckedItemIds, setCustomChecklist])
 
   // Activate toasts after the init effects have settled (setTimeout(0) fires
   // after all synchronous state updates from mount effects are processed)
@@ -563,6 +596,7 @@ export default function SkillCanvas({ tree, initialCompletedIds = [], userRating
     const treeId = tree.treeId
     setResetModalOpen(false)
     setCompletedNodeIds([])
+    resetChecklist(treeId)
     setGlobalXp(0)
     if (typeof window !== 'undefined') {
       localStorage.removeItem(`progress:${treeId}`)
@@ -572,7 +606,7 @@ export default function SkillCanvas({ tree, initialCompletedIds = [], userRating
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ treeId, completedNodeIds: [] }),
     }).catch(() => {/* Non-critical */})
-  }, [tree.treeId, setCompletedNodeIds, setGlobalXp])
+  }, [tree.treeId, setCompletedNodeIds, resetChecklist, setGlobalXp])
 
   const handleResetProgress = useCallback(() => setResetModalOpen(true), [])
 

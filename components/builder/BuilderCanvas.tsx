@@ -14,7 +14,7 @@ import '@xyflow/react/dist/style.css'
 import { AnimatePresence } from 'framer-motion'
 
 import { useBuilderStore } from '@/lib/builder-store'
-import { treeToDraft, type BuilderDraft } from '@/lib/builder-utils'
+import { treeToDraft, exportChecklist, type BuilderDraft } from '@/lib/builder-utils'
 import { computeAutoLayout } from '@/lib/autoLayout'
 import type { SkillTree } from '@/types/tree'
 
@@ -360,6 +360,7 @@ function BuilderCanvasInner({ existingTree, initialDraft }: Props) {
         icon: n.data.icon,
         zone: n.data.zone,
         resources: n.data.resources,
+        ...exportChecklist(n.data.checklist),
         requires: edges.filter(e => e.target === n.id).map(e => e.source),
       })),
       edges: edges.map(e => ({ id: e.id, source: e.source, target: e.target })),

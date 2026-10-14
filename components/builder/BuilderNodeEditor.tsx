@@ -4,10 +4,11 @@ import { useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useBuilderStore } from '@/lib/builder-store'
 import { ResourceEditor } from '@/components/builder/ResourceEditor'
+import { ChecklistEditor } from '@/components/builder/ChecklistEditor'
 import { IconPicker } from '@/components/builder/IconPicker'
 import { ZoneSelector } from '@/components/builder/ZoneSelector'
 import { zoneColor, isEmoji } from '@/lib/builder-utils'
-import type { Resource } from '@/types/tree'
+import type { Resource, ChecklistItem } from '@/types/tree'
 
 const SPRING = { type: 'spring' as const, damping: 28, stiffness: 300 }
 
@@ -184,6 +185,23 @@ export function BuilderNodeEditor() {
                     onChange={zone => updateNodeData(node.id, { zone })}
                   />
                 </div>
+              </div>
+
+              {/* ── Divider ── */}
+              <div className="border-t border-white/[0.06]" />
+
+              {/* ── Checklist ── */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">Checklist</h3>
+                  {(d.checklist?.length ?? 0) > 0 && (
+                    <span className="text-[11px] text-slate-600 tabular-nums">{d.checklist!.length} items</span>
+                  )}
+                </div>
+                <ChecklistEditor
+                  items={d.checklist ?? []}
+                  onChange={(checklist: ChecklistItem[]) => updateNodeData(node.id, { checklist })}
+                />
               </div>
 
               {/* ── Divider ── */}

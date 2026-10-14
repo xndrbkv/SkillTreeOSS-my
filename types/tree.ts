@@ -13,6 +13,12 @@ export interface Resource {
   language?: string
 }
 
+/** A sub-topic of a node the learner can tick off independently. */
+export interface ChecklistItem {
+  id: string     // unique within its node
+  label: string
+}
+
 export interface TreeNode {
   id: string
   label: string
@@ -20,6 +26,7 @@ export interface TreeNode {
   icon: string
   zone: string
   resources: Resource[]
+  checklist?: ChecklistItem[]
   position?: { x: number; y: number }  // omit in JSON; Dagre computes layout automatically. Reserved for future roadmap creator.
   requires: string[]
 }

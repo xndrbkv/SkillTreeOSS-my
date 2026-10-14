@@ -42,6 +42,17 @@
               }
             }
           },
+          "checklist": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "label"],
+              "properties": {
+                "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+                "label": { "type": "string" }
+              }
+            }
+          },
           "position": {
             "type": "object",
             "required": ["x", "y"],

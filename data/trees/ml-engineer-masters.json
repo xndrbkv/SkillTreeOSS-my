@@ -1,0 +1,1730 @@
+{
+  "treeId": "ml-engineer-masters",
+  "title": "ML Engineer (Master's Program)",
+  "category": "Machine Learning",
+  "difficulty": "hard",
+  "description": "Path to becoming an ML Engineer alongside a 4-semester master's program: engineering foundations, data, classic ML, LLM systems, MLOps and the math behind it. Each skill has a checklist of topics to tick off.",
+  "version": "1.1",
+  "estimatedMonths": 24,
+  "totalNodes": 47,
+  "icon": "neurology",
+  "nodes": [
+    {
+      "id": "terminal",
+      "label": "Терминал",
+      "description": "Уверенно работать в командной строке: навигация, запуск команд, чтение ошибок.",
+      "icon": "terminal",
+      "zone": "Foundation",
+      "resources": [],
+      "requires": [],
+      "checklist": [
+        {
+          "id": "nav",
+          "label": "Навигация: cd, ls, pwd, абсолютные и относительные пути"
+        },
+        {
+          "id": "files",
+          "label": "Файлы и папки: cp, mv, rm, mkdir, cat, less"
+        },
+        {
+          "id": "pipes",
+          "label": "Потоки и пайпы: |, >, >>, grep, head, tail"
+        },
+        {
+          "id": "env",
+          "label": "Переменные окружения и PATH"
+        },
+        {
+          "id": "errors",
+          "label": "Чтение ошибок и кодов возврата, --help и man"
+        }
+      ]
+    },
+    {
+      "id": "git",
+      "label": "Git и GitHub",
+      "description": "Вести историю изменений и работать в команде через ветки и pull request.",
+      "icon": "fork_right",
+      "zone": "Foundation",
+      "resources": [],
+      "requires": [
+        "terminal"
+      ],
+      "checklist": [
+        {
+          "id": "basics",
+          "label": "init / clone / add / commit / status / log / diff"
+        },
+        {
+          "id": "gitignore",
+          "label": ".gitignore: не коммитить секреты, данные и окружения"
+        },
+        {
+          "id": "branches",
+          "label": "Ветки: создание, переключение, merge"
+        },
+        {
+          "id": "conflicts",
+          "label": "Разрешение конфликтов слияния"
+        },
+        {
+          "id": "remote",
+          "label": "Работа с remote: push, pull, fetch"
+        },
+        {
+          "id": "pr",
+          "label": "Pull request: описание, code review, правки по замечаниям"
+        },
+        {
+          "id": "undo",
+          "label": "Откат изменений: restore, revert, reset"
+        }
+      ]
+    },
+    {
+      "id": "linux",
+      "label": "Linux и деплой на сервер",
+      "description": "Администрировать сервер и разворачивать на нём сервисы.",
+      "icon": "computer",
+      "zone": "Foundation",
+      "resources": [],
+      "requires": [
+        "terminal"
+      ],
+      "checklist": [
+        {
+          "id": "perms",
+          "label": "Пользователи, права доступа, chmod/chown, sudo"
+        },
+        {
+          "id": "procs",
+          "label": "Процессы: ps, top/htop, kill, сигналы"
+        },
+        {
+          "id": "packages",
+          "label": "Пакетный менеджер (apt)"
+        },
+        {
+          "id": "ssh",
+          "label": "SSH: ключи, config, подключение к серверу"
+        },
+        {
+          "id": "scp",
+          "label": "Копирование файлов на сервер: scp / rsync"
+        },
+        {
+          "id": "systemd",
+          "label": "Сервисы systemd: unit-файл, автозапуск, journalctl"
+        },
+        {
+          "id": "vps",
+          "label": "Деплой сервиса на VPS: окружение, секреты, обновление"
+        }
+      ]
+    },
+    {
+      "id": "networks-api",
+      "label": "Сети, HTTP и API",
+      "description": "Понимать, как сервисы общаются по сети, и уметь работать с внешними API.",
+      "icon": "api",
+      "zone": "Foundation",
+      "resources": [],
+      "requires": [
+        "terminal"
+      ],
+      "checklist": [
+        {
+          "id": "ports",
+          "label": "IP, DNS, порты, localhost"
+        },
+        {
+          "id": "http",
+          "label": "HTTP: методы, статус-коды, заголовки, тело запроса"
+        },
+        {
+          "id": "rest",
+          "label": "REST и JSON"
+        },
+        {
+          "id": "curl",
+          "label": "Запросы из терминала (curl) и из Python (httpx / requests)"
+        },
+        {
+          "id": "auth",
+          "label": "Аутентификация: API-ключи, токены, хранение секретов в .env"
+        },
+        {
+          "id": "limits",
+          "label": "Rate limits, таймауты, повторы"
+        }
+      ]
+    },
+    {
+      "id": "python-envs",
+      "label": "Окружения и зависимости (uv)",
+      "description": "Изолировать окружения проекта и воспроизводимо фиксировать зависимости.",
+      "icon": "deployed_code",
+      "zone": "Python Core",
+      "resources": [],
+      "requires": [
+        "terminal"
+      ],
+      "checklist": [
+        {
+          "id": "venv",
+          "label": "Виртуальные окружения: зачем и как устроены"
+        },
+        {
+          "id": "uv",
+          "label": "uv: создание проекта, uv add / uv sync / uv run"
+        },
+        {
+          "id": "pyproject",
+          "label": "pyproject.toml: зависимости, группы dev-зависимостей"
+        },
+        {
+          "id": "lock",
+          "label": "Lock-файл и воспроизводимая установка"
+        },
+        {
+          "id": "python-versions",
+          "label": "Управление версиями Python"
+        }
+      ]
+    },
+    {
+      "id": "python-programming",
+      "label": "Базовый Python",
+      "description": "Синтаксис, структуры данных, функции и ООП. Дисциплина 1 семестра.",
+      "icon": "code",
+      "zone": "Python Core",
+      "resources": [],
+      "requires": [
+        "python-envs"
+      ],
+      "checklist": [
+        {
+          "id": "types",
+          "label": "Типы данных: int, float, str, bool, None"
+        },
+        {
+          "id": "collections",
+          "label": "Коллекции: list, tuple, dict, set"
+        },
+        {
+          "id": "conditions",
+          "label": "Условия и логические операторы"
+        },
+        {
+          "id": "loops",
+          "label": "Циклы: for, while, break/continue, range, enumerate, zip"
+        },
+        {
+          "id": "comprehensions",
+          "label": "Comprehensions и генераторы"
+        },
+        {
+          "id": "functions",
+          "label": "Функции: аргументы, *args/**kwargs, области видимости, lambda"
+        },
+        {
+          "id": "exceptions",
+          "label": "Исключения: try/except/finally, свои исключения"
+        },
+        {
+          "id": "files",
+          "label": "Работа с файлами и контекстные менеджеры"
+        },
+        {
+          "id": "oop",
+          "label": "ООП: классы, наследование, магические методы, dataclasses"
+        },
+        {
+          "id": "stdlib",
+          "label": "Стандартная библиотека: pathlib, json, datetime, collections, itertools"
+        }
+      ]
+    },
+    {
+      "id": "python-production",
+      "label": "Python для продакшена",
+      "description": "Писать код, который можно поддерживать: структура проекта, модули, типизация, конфиги.",
+      "icon": "construction",
+      "zone": "Python Core",
+      "resources": [],
+      "requires": [
+        "python-programming",
+        "git"
+      ],
+      "checklist": [
+        {
+          "id": "structure",
+          "label": "Структура проекта: src-layout, пакеты, точка входа"
+        },
+        {
+          "id": "modules",
+          "label": "Модули и импорты, разбиение кода на слои"
+        },
+        {
+          "id": "typing",
+          "label": "Аннотации типов и проверка mypy / pyright"
+        },
+        {
+          "id": "pydantic",
+          "label": "Валидация данных с pydantic"
+        },
+        {
+          "id": "config",
+          "label": "Конфиги: переменные окружения, .env, pydantic-settings"
+        },
+        {
+          "id": "logging",
+          "label": "Логирование вместо print"
+        },
+        {
+          "id": "lint",
+          "label": "Линтер и форматтер (ruff), pre-commit"
+        }
+      ]
+    },
+    {
+      "id": "testing",
+      "label": "Тесты (pytest)",
+      "description": "Покрывать код автоматическими тестами и запускать их одной командой.",
+      "icon": "bug_report",
+      "zone": "Python Core",
+      "resources": [],
+      "requires": [
+        "python-production"
+      ],
+      "checklist": [
+        {
+          "id": "basics",
+          "label": "pytest: тестовые функции, assert, запуск"
+        },
+        {
+          "id": "fixtures",
+          "label": "Фикстуры и conftest.py"
+        },
+        {
+          "id": "parametrize",
+          "label": "Параметризация тестов"
+        },
+        {
+          "id": "mocks",
+          "label": "Моки внешних сервисов и API"
+        },
+        {
+          "id": "db",
+          "label": "Тесты с базой данных"
+        },
+        {
+          "id": "coverage",
+          "label": "Покрытие кода (pytest-cov)"
+        }
+      ]
+    },
+    {
+      "id": "python-async",
+      "label": "Асинхронность",
+      "description": "Понимать async-код на уровне, достаточном для ботов и API. Глубоко не обязательно.",
+      "icon": "sync",
+      "zone": "Python Core",
+      "resources": [],
+      "requires": [
+        "python-programming"
+      ],
+      "checklist": [
+        {
+          "id": "event-loop",
+          "label": "Event loop, async/await, корутины"
+        },
+        {
+          "id": "gather",
+          "label": "Параллельные задачи: asyncio.gather, таймауты"
+        },
+        {
+          "id": "blocking",
+          "label": "Почему нельзя блокировать event loop"
+        },
+        {
+          "id": "aiogram",
+          "label": "Async на практике: aiogram, httpx.AsyncClient"
+        }
+      ]
+    },
+    {
+      "id": "docker",
+      "label": "Docker и docker-compose",
+      "description": "Упаковывать сервисы в контейнеры и поднимать несколько сервисов вместе.",
+      "icon": "inventory_2",
+      "zone": "Tools",
+      "resources": [],
+      "requires": [
+        "linux",
+        "networks-api",
+        "python-envs"
+      ],
+      "checklist": [
+        {
+          "id": "concepts",
+          "label": "Образ, контейнер, слои, registry"
+        },
+        {
+          "id": "dockerfile",
+          "label": "Dockerfile для Python-приложения"
+        },
+        {
+          "id": "cache",
+          "label": "Кэширование слоёв и размер образа, multi-stage build"
+        },
+        {
+          "id": "volumes",
+          "label": "Volumes, порты, переменные окружения"
+        },
+        {
+          "id": "compose",
+          "label": "docker-compose: приложение + PostgreSQL"
+        },
+        {
+          "id": "debug",
+          "label": "Логи и отладка контейнеров"
+        }
+      ]
+    },
+    {
+      "id": "ci-cd",
+      "label": "CI/CD (GitHub Actions)",
+      "description": "Автоматически проверять и выкатывать код при каждом изменении.",
+      "icon": "rocket_launch",
+      "zone": "Tools",
+      "resources": [],
+      "requires": [
+        "git",
+        "testing",
+        "docker"
+      ],
+      "checklist": [
+        {
+          "id": "workflow",
+          "label": "Workflow, jobs, steps, триггеры"
+        },
+        {
+          "id": "ci",
+          "label": "CI: линтер и тесты на каждый pull request"
+        },
+        {
+          "id": "secrets",
+          "label": "Секреты в GitHub Actions"
+        },
+        {
+          "id": "build",
+          "label": "Сборка и публикация Docker-образа"
+        },
+        {
+          "id": "deploy",
+          "label": "Автодеплой на сервер"
+        }
+      ]
+    },
+    {
+      "id": "frontend-build",
+      "label": "Сборка фронтенда",
+      "description": "Запускать и собирать фронтенд-проекты: npm, сборщики, переменные окружения.",
+      "icon": "web",
+      "zone": "Tools",
+      "resources": [],
+      "requires": [
+        "networks-api"
+      ],
+      "checklist": [
+        {
+          "id": "node",
+          "label": "Node.js и npm: установка зависимостей, скрипты"
+        },
+        {
+          "id": "build",
+          "label": "Сборка проекта и dev-сервер"
+        },
+        {
+          "id": "env",
+          "label": "Переменные окружения фронтенда"
+        }
+      ]
+    },
+    {
+      "id": "kubernetes-cloud",
+      "label": "Kubernetes и облака",
+      "description": "Разворачивать и масштабировать ML-сервисы в облаке. Следующий проект.",
+      "icon": "cloud",
+      "zone": "Tools",
+      "resources": [],
+      "requires": [
+        "docker",
+        "ci-cd"
+      ],
+      "checklist": [
+        {
+          "id": "k8s-basics",
+          "label": "Pod, Deployment, Service, Ingress"
+        },
+        {
+          "id": "kubectl",
+          "label": "kubectl и манифесты"
+        },
+        {
+          "id": "helm",
+          "label": "Helm"
+        },
+        {
+          "id": "cloud",
+          "label": "Облачный провайдер: вычисления, хранилище, managed БД"
+        },
+        {
+          "id": "gpu",
+          "label": "GPU-инстансы и стоимость"
+        }
+      ]
+    },
+    {
+      "id": "math-analysis-probability",
+      "label": "Мат. анализ и теория вероятностей",
+      "description": "Пределы, производные, интегралы; вероятность и случайные величины. Дисциплина 1 семестра.",
+      "icon": "functions",
+      "zone": "Math Semester 1",
+      "resources": [],
+      "requires": [],
+      "checklist": [
+        {
+          "id": "limits",
+          "label": "Пределы и непрерывность"
+        },
+        {
+          "id": "derivatives",
+          "label": "Производные и частные производные"
+        },
+        {
+          "id": "gradient",
+          "label": "Градиент"
+        },
+        {
+          "id": "integrals",
+          "label": "Интегралы"
+        },
+        {
+          "id": "probability",
+          "label": "Вероятность, условная вероятность, формула Байеса"
+        },
+        {
+          "id": "random-vars",
+          "label": "Случайные величины, матожидание, дисперсия"
+        },
+        {
+          "id": "distributions",
+          "label": "Основные распределения: биномиальное, Пуассона, нормальное"
+        }
+      ]
+    },
+    {
+      "id": "math-statistics",
+      "label": "Математическая статистика",
+      "description": "Оценки, доверительные интервалы и проверка гипотез. Дисциплина 1 семестра.",
+      "icon": "query_stats",
+      "zone": "Math Semester 1",
+      "resources": [],
+      "requires": [
+        "math-analysis-probability"
+      ],
+      "checklist": [
+        {
+          "id": "descriptive",
+          "label": "Описательная статистика"
+        },
+        {
+          "id": "estimates",
+          "label": "Точечные оценки, метод максимального правдоподобия"
+        },
+        {
+          "id": "clt",
+          "label": "Закон больших чисел и ЦПТ"
+        },
+        {
+          "id": "ci",
+          "label": "Доверительные интервалы"
+        },
+        {
+          "id": "hypotheses",
+          "label": "Проверка гипотез, p-value, ошибки I и II рода"
+        },
+        {
+          "id": "tests",
+          "label": "t-тест, хи-квадрат, непараметрические тесты"
+        },
+        {
+          "id": "correlation",
+          "label": "Корреляция и линейная регрессия"
+        }
+      ]
+    },
+    {
+      "id": "linear-algebra",
+      "label": "Линейная алгебра",
+      "description": "Векторы, матрицы и разложения, на которых построен ML. Дисциплина 1 семестра.",
+      "icon": "grid_on",
+      "zone": "Math Semester 1",
+      "resources": [],
+      "requires": [],
+      "checklist": [
+        {
+          "id": "vectors",
+          "label": "Векторы, скалярное произведение, нормы"
+        },
+        {
+          "id": "matrices",
+          "label": "Матрицы и операции над ними"
+        },
+        {
+          "id": "systems",
+          "label": "Системы линейных уравнений, ранг"
+        },
+        {
+          "id": "inverse",
+          "label": "Определитель и обратная матрица"
+        },
+        {
+          "id": "eigen",
+          "label": "Собственные значения и векторы"
+        },
+        {
+          "id": "svd",
+          "label": "SVD и PCA"
+        }
+      ]
+    },
+    {
+      "id": "math-advanced",
+      "label": "Дополнительные главы математики",
+      "description": "Дисциплина 1 семестра.",
+      "icon": "calculate",
+      "zone": "Math Semester 1",
+      "resources": [],
+      "requires": [
+        "math-analysis-probability",
+        "linear-algebra"
+      ]
+    },
+    {
+      "id": "optimization",
+      "label": "Оптимизация",
+      "description": "Математика обучения моделей: функции потерь и градиентные методы.",
+      "icon": "trending_down",
+      "zone": "Math Semester 1",
+      "resources": [],
+      "requires": [
+        "math-analysis-probability",
+        "linear-algebra"
+      ],
+      "checklist": [
+        {
+          "id": "loss",
+          "label": "Функции потерь"
+        },
+        {
+          "id": "convexity",
+          "label": "Выпуклость, локальные и глобальные минимумы"
+        },
+        {
+          "id": "gd",
+          "label": "Градиентный спуск"
+        },
+        {
+          "id": "sgd",
+          "label": "SGD, mini-batch, momentum, Adam"
+        },
+        {
+          "id": "regularization",
+          "label": "Регуляризация: L1, L2"
+        }
+      ]
+    },
+    {
+      "id": "sql-postgres",
+      "label": "SQL и PostgreSQL",
+      "description": "Хранить данные в реляционной БД и работать с ней из Python через ORM.",
+      "icon": "database",
+      "zone": "Data",
+      "resources": [],
+      "requires": [
+        "python-production"
+      ],
+      "checklist": [
+        {
+          "id": "select",
+          "label": "SELECT, WHERE, ORDER BY, LIMIT"
+        },
+        {
+          "id": "joins",
+          "label": "JOIN"
+        },
+        {
+          "id": "aggregation",
+          "label": "GROUP BY и агрегатные функции"
+        },
+        {
+          "id": "window",
+          "label": "Оконные функции и CTE"
+        },
+        {
+          "id": "schema",
+          "label": "Проектирование схемы, ключи, индексы"
+        },
+        {
+          "id": "postgres",
+          "label": "PostgreSQL: установка, psql, пользователи"
+        },
+        {
+          "id": "orm",
+          "label": "ORM (SQLAlchemy)"
+        },
+        {
+          "id": "migrations",
+          "label": "Миграции (Alembic)"
+        }
+      ]
+    },
+    {
+      "id": "data-collection",
+      "label": "Сбор данных",
+      "description": "Собирать данные из внешних источников и сохранять их в БД.",
+      "icon": "cloud_download",
+      "zone": "Data",
+      "resources": [],
+      "requires": [
+        "networks-api",
+        "python-production"
+      ],
+      "checklist": [
+        {
+          "id": "api",
+          "label": "Сбор из внешних API, пагинация"
+        },
+        {
+          "id": "rss",
+          "label": "Парсинг RSS"
+        },
+        {
+          "id": "scraping",
+          "label": "Парсинг HTML (при необходимости)"
+        },
+        {
+          "id": "dedup",
+          "label": "Дедупликация и нормализация данных"
+        },
+        {
+          "id": "storage",
+          "label": "Сохранение в БД"
+        }
+      ]
+    },
+    {
+      "id": "python-data-analysis",
+      "label": "pandas и EDA",
+      "description": "Исследовать и готовить данные в ноутбуках. Дисциплина «Python для анализа данных», 1 семестр.",
+      "icon": "analytics",
+      "zone": "Data",
+      "resources": [],
+      "requires": [
+        "python-programming",
+        "math-statistics"
+      ],
+      "checklist": [
+        {
+          "id": "numpy",
+          "label": "NumPy: массивы, векторизация"
+        },
+        {
+          "id": "pandas",
+          "label": "pandas: DataFrame, индексация, фильтрация"
+        },
+        {
+          "id": "groupby",
+          "label": "groupby, merge, pivot"
+        },
+        {
+          "id": "cleaning",
+          "label": "Пропуски, выбросы, типы данных"
+        },
+        {
+          "id": "viz",
+          "label": "Визуализация: matplotlib, seaborn"
+        },
+        {
+          "id": "notebooks",
+          "label": "Jupyter-ноутбуки и оформление EDA"
+        }
+      ]
+    },
+    {
+      "id": "ab-testing",
+      "label": "A/B-тестирование",
+      "description": "Планировать эксперименты и статистически корректно делать выводы. Дисциплина 1 семестра.",
+      "icon": "science",
+      "zone": "Data",
+      "resources": [],
+      "requires": [
+        "math-statistics",
+        "python-data-analysis"
+      ],
+      "checklist": [
+        {
+          "id": "design",
+          "label": "Дизайн эксперимента и выбор метрик"
+        },
+        {
+          "id": "power",
+          "label": "Размер выборки и мощность теста"
+        },
+        {
+          "id": "analysis",
+          "label": "Анализ результатов, доверительные интервалы"
+        },
+        {
+          "id": "pitfalls",
+          "label": "Подглядывание, множественные сравнения"
+        },
+        {
+          "id": "cuped",
+          "label": "Снижение дисперсии (CUPED)"
+        }
+      ]
+    },
+    {
+      "id": "pipelines",
+      "label": "Пайплайны и расписания",
+      "description": "Регулярно запускать сбор и обработку данных. Начать с APScheduler, затем оркестратор.",
+      "icon": "schedule",
+      "zone": "Data",
+      "resources": [],
+      "requires": [
+        "data-collection",
+        "sql-postgres"
+      ],
+      "checklist": [
+        {
+          "id": "apscheduler",
+          "label": "Периодические задачи: APScheduler"
+        },
+        {
+          "id": "idempotency",
+          "label": "Идемпотентность и повторы при сбоях"
+        },
+        {
+          "id": "orchestrator",
+          "label": "Оркестратор: Airflow, Prefect или Dagster"
+        },
+        {
+          "id": "dag",
+          "label": "DAG, зависимости задач, backfill"
+        }
+      ]
+    },
+    {
+      "id": "data-versioning",
+      "label": "Версионирование данных",
+      "description": "Воспроизводимо версионировать данные и признаки. Следующий проект.",
+      "icon": "history",
+      "zone": "Data",
+      "resources": [],
+      "requires": [
+        "git",
+        "pipelines"
+      ],
+      "checklist": [
+        {
+          "id": "dvc",
+          "label": "DVC: версионирование датасетов"
+        },
+        {
+          "id": "remote",
+          "label": "Удалённое хранилище данных"
+        },
+        {
+          "id": "feature-store",
+          "label": "Feature store: зачем нужен и как устроен"
+        }
+      ]
+    },
+    {
+      "id": "classic-ml",
+      "label": "Классический ML",
+      "description": "Обучать и честно оценивать модели в scikit-learn.",
+      "icon": "model_training",
+      "zone": "Models",
+      "resources": [],
+      "requires": [
+        "python-data-analysis",
+        "linear-algebra",
+        "optimization"
+      ],
+      "checklist": [
+        {
+          "id": "tasks",
+          "label": "Типы задач: классификация, регрессия, кластеризация"
+        },
+        {
+          "id": "linear",
+          "label": "Линейные модели"
+        },
+        {
+          "id": "trees",
+          "label": "Деревья и ансамбли, градиентный бустинг"
+        },
+        {
+          "id": "features",
+          "label": "Признаки: кодирование, масштабирование, генерация"
+        },
+        {
+          "id": "pipeline",
+          "label": "sklearn Pipeline и ColumnTransformer"
+        },
+        {
+          "id": "validation",
+          "label": "Валидация: train/val/test, кросс-валидация, утечки"
+        },
+        {
+          "id": "metrics",
+          "label": "Метрики: accuracy, precision/recall, F1, ROC-AUC, MAE/RMSE"
+        },
+        {
+          "id": "tuning",
+          "label": "Подбор гиперпараметров"
+        }
+      ]
+    },
+    {
+      "id": "embeddings-search",
+      "label": "Эмбеддинги и векторный поиск",
+      "description": "Представлять тексты векторами и искать похожие.",
+      "icon": "hub",
+      "zone": "Models",
+      "resources": [],
+      "requires": [
+        "classic-ml",
+        "sql-postgres"
+      ],
+      "checklist": [
+        {
+          "id": "embeddings",
+          "label": "Что такое эмбеддинги, модели эмбеддингов"
+        },
+        {
+          "id": "similarity",
+          "label": "Косинусная близость"
+        },
+        {
+          "id": "ann",
+          "label": "Приближённый поиск ближайших соседей (ANN)"
+        },
+        {
+          "id": "vector-db",
+          "label": "Векторная БД (pgvector или аналог)"
+        },
+        {
+          "id": "hybrid",
+          "label": "Гибридный поиск: векторы + ключевые слова"
+        }
+      ]
+    },
+    {
+      "id": "ranking-feedback",
+      "label": "Ранжирование по обратной связи",
+      "description": "Улучшать выдачу на основе реакций пользователей.",
+      "icon": "thumbs_up_down",
+      "zone": "Models",
+      "resources": [],
+      "requires": [
+        "embeddings-search",
+        "classic-ml"
+      ],
+      "checklist": [
+        {
+          "id": "signals",
+          "label": "Сбор сигналов: лайки, клики, пропуски"
+        },
+        {
+          "id": "ranking",
+          "label": "Модель ранжирования поверх признаков"
+        },
+        {
+          "id": "metrics",
+          "label": "Метрики ранжирования: precision@k, NDCG"
+        },
+        {
+          "id": "explore",
+          "label": "Exploration vs exploitation, холодный старт"
+        }
+      ]
+    },
+    {
+      "id": "llm-api",
+      "label": "LLM: API и промпты",
+      "description": "Встраивать LLM в продукт через API и получать предсказуемый результат.",
+      "icon": "chat",
+      "zone": "Models",
+      "resources": [],
+      "requires": [
+        "python-production",
+        "networks-api"
+      ],
+      "checklist": [
+        {
+          "id": "api",
+          "label": "Работа с API LLM: сообщения, параметры, токены, стоимость"
+        },
+        {
+          "id": "prompts",
+          "label": "Промпт-инжиниринг: системный промпт, примеры"
+        },
+        {
+          "id": "structured",
+          "label": "Structured output: JSON-схемы, pydantic"
+        },
+        {
+          "id": "tools",
+          "label": "Вызов инструментов (tool use)"
+        },
+        {
+          "id": "errors",
+          "label": "Обработка ошибок, лимитов и повторов"
+        }
+      ]
+    },
+    {
+      "id": "rag-agents",
+      "label": "RAG и агенты",
+      "description": "Строить системы, которые отвечают по своим данным и выполняют действия.",
+      "icon": "smart_toy",
+      "zone": "Models",
+      "resources": [],
+      "requires": [
+        "llm-api",
+        "embeddings-search"
+      ],
+      "checklist": [
+        {
+          "id": "chunking",
+          "label": "Подготовка документов и чанкинг"
+        },
+        {
+          "id": "rag",
+          "label": "RAG: поиск + генерация, цитирование источников"
+        },
+        {
+          "id": "agents",
+          "label": "Агенты: цикл с инструментами"
+        },
+        {
+          "id": "mcp",
+          "label": "Свой MCP-сервер"
+        }
+      ]
+    },
+    {
+      "id": "deep-learning",
+      "label": "Deep learning (PyTorch)",
+      "description": "Обучать нейросети и дообучать трансформеры. Следующий проект.",
+      "icon": "neurology",
+      "zone": "Models",
+      "resources": [],
+      "requires": [
+        "classic-ml",
+        "optimization"
+      ],
+      "checklist": [
+        {
+          "id": "tensors",
+          "label": "Тензоры и autograd"
+        },
+        {
+          "id": "training-loop",
+          "label": "Цикл обучения: Dataset, DataLoader, оптимизатор"
+        },
+        {
+          "id": "architectures",
+          "label": "MLP, CNN, RNN — базовые архитектуры"
+        },
+        {
+          "id": "transformers",
+          "label": "Трансформеры и attention"
+        },
+        {
+          "id": "fine-tuning",
+          "label": "Fine-tuning трансформеров (в т.ч. LoRA)"
+        }
+      ]
+    },
+    {
+      "id": "other-domains",
+      "label": "Другие домены",
+      "description": "Компьютерное зрение, временные ряды и другие задачи. Следующий проект.",
+      "icon": "category",
+      "zone": "Models",
+      "resources": [],
+      "requires": [
+        "deep-learning"
+      ],
+      "checklist": [
+        {
+          "id": "cv",
+          "label": "Компьютерное зрение: классификация, детекция"
+        },
+        {
+          "id": "timeseries",
+          "label": "Временные ряды и прогнозирование"
+        },
+        {
+          "id": "recsys",
+          "label": "Рекомендательные системы"
+        }
+      ]
+    },
+    {
+      "id": "evals",
+      "label": "Evals для LLM",
+      "description": "Измерять качество LLM-систем, а не оценивать на глаз.",
+      "icon": "fact_check",
+      "zone": "MLOps",
+      "resources": [],
+      "requires": [
+        "llm-api"
+      ],
+      "checklist": [
+        {
+          "id": "dataset",
+          "label": "Набор тестовых примеров (golden set)"
+        },
+        {
+          "id": "metrics",
+          "label": "Автоматические метрики и проверки"
+        },
+        {
+          "id": "judge",
+          "label": "LLM-as-judge и его калибровка"
+        },
+        {
+          "id": "regression",
+          "label": "Прогон evals при изменении промптов и моделей"
+        }
+      ]
+    },
+    {
+      "id": "mlflow",
+      "label": "Трекинг экспериментов (MLflow)",
+      "description": "Фиксировать параметры, метрики и артефакты каждого эксперимента.",
+      "icon": "monitoring",
+      "zone": "MLOps",
+      "resources": [],
+      "requires": [
+        "classic-ml"
+      ],
+      "checklist": [
+        {
+          "id": "tracking",
+          "label": "Логирование параметров, метрик и артефактов"
+        },
+        {
+          "id": "ui",
+          "label": "Сравнение запусков в UI"
+        },
+        {
+          "id": "registry",
+          "label": "Model Registry: версии моделей"
+        }
+      ]
+    },
+    {
+      "id": "model-serving",
+      "label": "Model serving (FastAPI)",
+      "description": "Отдавать предсказания модели через HTTP-сервис.",
+      "icon": "dns",
+      "zone": "MLOps",
+      "resources": [],
+      "requires": [
+        "classic-ml",
+        "python-production",
+        "docker"
+      ],
+      "checklist": [
+        {
+          "id": "fastapi",
+          "label": "FastAPI: эндпоинты, pydantic-схемы"
+        },
+        {
+          "id": "loading",
+          "label": "Загрузка модели при старте сервиса"
+        },
+        {
+          "id": "async",
+          "label": "Синхронный и асинхронный инференс"
+        },
+        {
+          "id": "docker",
+          "label": "Упаковка сервиса в Docker"
+        },
+        {
+          "id": "healthcheck",
+          "label": "Healthcheck и логирование запросов"
+        }
+      ]
+    },
+    {
+      "id": "monitoring-drift",
+      "label": "Мониторинг моделей и дрейф",
+      "description": "Замечать, когда модель начинает работать хуже. Сейчас — базовый уровень.",
+      "icon": "insights",
+      "zone": "MLOps",
+      "resources": [],
+      "requires": [
+        "model-serving",
+        "math-statistics"
+      ],
+      "checklist": [
+        {
+          "id": "service-metrics",
+          "label": "Технические метрики: латентность, ошибки"
+        },
+        {
+          "id": "quality",
+          "label": "Метрики качества модели в проде"
+        },
+        {
+          "id": "data-drift",
+          "label": "Дрейф данных и предсказаний"
+        },
+        {
+          "id": "alerts",
+          "label": "Алерты и дашборды"
+        }
+      ]
+    },
+    {
+      "id": "inference-optimization",
+      "label": "Оптимизация инференса",
+      "description": "Ускорять и удешевлять инференс. Следующий проект.",
+      "icon": "speed",
+      "zone": "MLOps",
+      "resources": [],
+      "requires": [
+        "deep-learning",
+        "model-serving"
+      ],
+      "checklist": [
+        {
+          "id": "onnx",
+          "label": "Экспорт в ONNX"
+        },
+        {
+          "id": "quantization",
+          "label": "Квантизация"
+        },
+        {
+          "id": "vllm",
+          "label": "Сервинг LLM: vLLM"
+        },
+        {
+          "id": "gpu",
+          "label": "Работа с GPU, батчинг"
+        }
+      ]
+    },
+    {
+      "id": "model-ab-testing",
+      "label": "A/B-тесты моделей",
+      "description": "Проверять новые модели на реальных пользователях. Следующий проект.",
+      "icon": "compare_arrows",
+      "zone": "MLOps",
+      "resources": [],
+      "requires": [
+        "ab-testing",
+        "model-serving"
+      ],
+      "checklist": [
+        {
+          "id": "split",
+          "label": "Разделение трафика между моделями"
+        },
+        {
+          "id": "metrics",
+          "label": "Продуктовые метрики vs офлайн-метрики"
+        },
+        {
+          "id": "rollout",
+          "label": "Shadow-режим и постепенная выкатка"
+        }
+      ]
+    },
+    {
+      "id": "project-python-programming",
+      "label": "Проект: Python",
+      "description": "Проект по дисциплине «Программирование на Python».",
+      "icon": "assignment",
+      "zone": "Projects S1",
+      "resources": [],
+      "requires": [
+        "python-programming"
+      ]
+    },
+    {
+      "id": "project-math-analysis",
+      "label": "Проект: Мат. анализ и вероятность",
+      "description": "Проект по дисциплине «Мат. анализ и теория вероятностей».",
+      "icon": "assignment",
+      "zone": "Projects S1",
+      "resources": [],
+      "requires": [
+        "math-analysis-probability"
+      ]
+    },
+    {
+      "id": "project-math-statistics",
+      "label": "Проект: Мат. статистика",
+      "description": "Проект по дисциплине «Математическая статистика».",
+      "icon": "assignment",
+      "zone": "Projects S1",
+      "resources": [],
+      "requires": [
+        "math-statistics"
+      ]
+    },
+    {
+      "id": "project-linear-algebra",
+      "label": "Проект: Линейная алгебра",
+      "description": "Проект по дисциплине «Линейная алгебра».",
+      "icon": "assignment",
+      "zone": "Projects S1",
+      "resources": [],
+      "requires": [
+        "linear-algebra"
+      ]
+    },
+    {
+      "id": "project-math-advanced",
+      "label": "Проект: Доп. главы математики",
+      "description": "Проект по дисциплине «Дополнительные главы математики».",
+      "icon": "assignment",
+      "zone": "Projects S1",
+      "resources": [],
+      "requires": [
+        "math-advanced"
+      ]
+    },
+    {
+      "id": "project-python-data",
+      "label": "Проект: Python для анализа данных",
+      "description": "Проект по дисциплине «Python для анализа данных».",
+      "icon": "assignment",
+      "zone": "Projects S1",
+      "resources": [],
+      "requires": [
+        "python-data-analysis"
+      ]
+    },
+    {
+      "id": "project-ab-testing",
+      "label": "Проект: A/B-тестирование",
+      "description": "Проект по дисциплине «A/B-тестирование».",
+      "icon": "assignment",
+      "zone": "Projects S1",
+      "resources": [],
+      "requires": [
+        "ab-testing"
+      ]
+    },
+    {
+      "id": "semester-2",
+      "label": "Семестр 2 (заглушка)",
+      "description": "Дисциплины 2 семестра — будут добавлены.",
+      "icon": "more_horiz",
+      "zone": "Future",
+      "resources": [],
+      "requires": [
+        "python-data-analysis",
+        "math-advanced"
+      ]
+    },
+    {
+      "id": "semester-3",
+      "label": "Семестр 3 (заглушка)",
+      "description": "Дисциплины 3 семестра — будут добавлены.",
+      "icon": "more_horiz",
+      "zone": "Future",
+      "resources": [],
+      "requires": [
+        "semester-2"
+      ]
+    },
+    {
+      "id": "semester-4",
+      "label": "Семестр 4 (заглушка)",
+      "description": "Дисциплины 4 семестра — будут добавлены.",
+      "icon": "more_horiz",
+      "zone": "Future",
+      "resources": [],
+      "requires": [
+        "semester-3"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-terminal-git",
+      "source": "terminal",
+      "target": "git"
+    },
+    {
+      "id": "e-terminal-linux",
+      "source": "terminal",
+      "target": "linux"
+    },
+    {
+      "id": "e-terminal-networks-api",
+      "source": "terminal",
+      "target": "networks-api"
+    },
+    {
+      "id": "e-terminal-python-envs",
+      "source": "terminal",
+      "target": "python-envs"
+    },
+    {
+      "id": "e-python-envs-python-programming",
+      "source": "python-envs",
+      "target": "python-programming"
+    },
+    {
+      "id": "e-python-programming-python-production",
+      "source": "python-programming",
+      "target": "python-production"
+    },
+    {
+      "id": "e-git-python-production",
+      "source": "git",
+      "target": "python-production"
+    },
+    {
+      "id": "e-python-production-testing",
+      "source": "python-production",
+      "target": "testing"
+    },
+    {
+      "id": "e-python-programming-python-async",
+      "source": "python-programming",
+      "target": "python-async"
+    },
+    {
+      "id": "e-linux-docker",
+      "source": "linux",
+      "target": "docker"
+    },
+    {
+      "id": "e-networks-api-docker",
+      "source": "networks-api",
+      "target": "docker"
+    },
+    {
+      "id": "e-python-envs-docker",
+      "source": "python-envs",
+      "target": "docker"
+    },
+    {
+      "id": "e-git-ci-cd",
+      "source": "git",
+      "target": "ci-cd"
+    },
+    {
+      "id": "e-testing-ci-cd",
+      "source": "testing",
+      "target": "ci-cd"
+    },
+    {
+      "id": "e-docker-ci-cd",
+      "source": "docker",
+      "target": "ci-cd"
+    },
+    {
+      "id": "e-networks-api-frontend-build",
+      "source": "networks-api",
+      "target": "frontend-build"
+    },
+    {
+      "id": "e-docker-kubernetes-cloud",
+      "source": "docker",
+      "target": "kubernetes-cloud"
+    },
+    {
+      "id": "e-ci-cd-kubernetes-cloud",
+      "source": "ci-cd",
+      "target": "kubernetes-cloud"
+    },
+    {
+      "id": "e-math-analysis-probability-math-statistics",
+      "source": "math-analysis-probability",
+      "target": "math-statistics"
+    },
+    {
+      "id": "e-math-analysis-probability-math-advanced",
+      "source": "math-analysis-probability",
+      "target": "math-advanced"
+    },
+    {
+      "id": "e-linear-algebra-math-advanced",
+      "source": "linear-algebra",
+      "target": "math-advanced"
+    },
+    {
+      "id": "e-math-analysis-probability-optimization",
+      "source": "math-analysis-probability",
+      "target": "optimization"
+    },
+    {
+      "id": "e-linear-algebra-optimization",
+      "source": "linear-algebra",
+      "target": "optimization"
+    },
+    {
+      "id": "e-python-production-sql-postgres",
+      "source": "python-production",
+      "target": "sql-postgres"
+    },
+    {
+      "id": "e-networks-api-data-collection",
+      "source": "networks-api",
+      "target": "data-collection"
+    },
+    {
+      "id": "e-python-production-data-collection",
+      "source": "python-production",
+      "target": "data-collection"
+    },
+    {
+      "id": "e-python-programming-python-data-analysis",
+      "source": "python-programming",
+      "target": "python-data-analysis"
+    },
+    {
+      "id": "e-math-statistics-python-data-analysis",
+      "source": "math-statistics",
+      "target": "python-data-analysis"
+    },
+    {
+      "id": "e-math-statistics-ab-testing",
+      "source": "math-statistics",
+      "target": "ab-testing"
+    },
+    {
+      "id": "e-python-data-analysis-ab-testing",
+      "source": "python-data-analysis",
+      "target": "ab-testing"
+    },
+    {
+      "id": "e-data-collection-pipelines",
+      "source": "data-collection",
+      "target": "pipelines"
+    },
+    {
+      "id": "e-sql-postgres-pipelines",
+      "source": "sql-postgres",
+      "target": "pipelines"
+    },
+    {
+      "id": "e-git-data-versioning",
+      "source": "git",
+      "target": "data-versioning"
+    },
+    {
+      "id": "e-pipelines-data-versioning",
+      "source": "pipelines",
+      "target": "data-versioning"
+    },
+    {
+      "id": "e-python-data-analysis-classic-ml",
+      "source": "python-data-analysis",
+      "target": "classic-ml"
+    },
+    {
+      "id": "e-linear-algebra-classic-ml",
+      "source": "linear-algebra",
+      "target": "classic-ml"
+    },
+    {
+      "id": "e-optimization-classic-ml",
+      "source": "optimization",
+      "target": "classic-ml"
+    },
+    {
+      "id": "e-classic-ml-embeddings-search",
+      "source": "classic-ml",
+      "target": "embeddings-search"
+    },
+    {
+      "id": "e-sql-postgres-embeddings-search",
+      "source": "sql-postgres",
+      "target": "embeddings-search"
+    },
+    {
+      "id": "e-embeddings-search-ranking-feedback",
+      "source": "embeddings-search",
+      "target": "ranking-feedback"
+    },
+    {
+      "id": "e-classic-ml-ranking-feedback",
+      "source": "classic-ml",
+      "target": "ranking-feedback"
+    },
+    {
+      "id": "e-python-production-llm-api",
+      "source": "python-production",
+      "target": "llm-api"
+    },
+    {
+      "id": "e-networks-api-llm-api",
+      "source": "networks-api",
+      "target": "llm-api"
+    },
+    {
+      "id": "e-llm-api-rag-agents",
+      "source": "llm-api",
+      "target": "rag-agents"
+    },
+    {
+      "id": "e-embeddings-search-rag-agents",
+      "source": "embeddings-search",
+      "target": "rag-agents"
+    },
+    {
+      "id": "e-classic-ml-deep-learning",
+      "source": "classic-ml",
+      "target": "deep-learning"
+    },
+    {
+      "id": "e-optimization-deep-learning",
+      "source": "optimization",
+      "target": "deep-learning"
+    },
+    {
+      "id": "e-deep-learning-other-domains",
+      "source": "deep-learning",
+      "target": "other-domains"
+    },
+    {
+      "id": "e-llm-api-evals",
+      "source": "llm-api",
+      "target": "evals"
+    },
+    {
+      "id": "e-classic-ml-mlflow",
+      "source": "classic-ml",
+      "target": "mlflow"
+    },
+    {
+      "id": "e-classic-ml-model-serving",
+      "source": "classic-ml",
+      "target": "model-serving"
+    },
+    {
+      "id": "e-python-production-model-serving",
+      "source": "python-production",
+      "target": "model-serving"
+    },
+    {
+      "id": "e-docker-model-serving",
+      "source": "docker",
+      "target": "model-serving"
+    },
+    {
+      "id": "e-model-serving-monitoring-drift",
+      "source": "model-serving",
+      "target": "monitoring-drift"
+    },
+    {
+      "id": "e-math-statistics-monitoring-drift",
+      "source": "math-statistics",
+      "target": "monitoring-drift"
+    },
+    {
+      "id": "e-deep-learning-inference-optimization",
+      "source": "deep-learning",
+      "target": "inference-optimization"
+    },
+    {
+      "id": "e-model-serving-inference-optimization",
+      "source": "model-serving",
+      "target": "inference-optimization"
+    },
+    {
+      "id": "e-ab-testing-model-ab-testing",
+      "source": "ab-testing",
+      "target": "model-ab-testing"
+    },
+    {
+      "id": "e-model-serving-model-ab-testing",
+      "source": "model-serving",
+      "target": "model-ab-testing"
+    },
+    {
+      "id": "e-python-programming-project-python-programming",
+      "source": "python-programming",
+      "target": "project-python-programming"
+    },
+    {
+      "id": "e-math-analysis-probability-project-math-analysis",
+      "source": "math-analysis-probability",
+      "target": "project-math-analysis"
+    },
+    {
+      "id": "e-math-statistics-project-math-statistics",
+      "source": "math-statistics",
+      "target": "project-math-statistics"
+    },
+    {
+      "id": "e-linear-algebra-project-linear-algebra",
+      "source": "linear-algebra",
+      "target": "project-linear-algebra"
+    },
+    {
+      "id": "e-math-advanced-project-math-advanced",
+      "source": "math-advanced",
+      "target": "project-math-advanced"
+    },
+    {
+      "id": "e-python-data-analysis-project-python-data",
+      "source": "python-data-analysis",
+      "target": "project-python-data"
+    },
+    {
+      "id": "e-ab-testing-project-ab-testing",
+      "source": "ab-testing",
+      "target": "project-ab-testing"
+    },
+    {
+      "id": "e-python-data-analysis-semester-2",
+      "source": "python-data-analysis",
+      "target": "semester-2"
+    },
+    {
+      "id": "e-math-advanced-semester-2",
+      "source": "math-advanced",
+      "target": "semester-2"
+    },
+    {
+      "id": "e-semester-2-semester-3",
+      "source": "semester-2",
+      "target": "semester-3"
+    },
+    {
+      "id": "e-semester-3-semester-4",
+      "source": "semester-3",
+      "target": "semester-4"
+    }
+  ]
+}

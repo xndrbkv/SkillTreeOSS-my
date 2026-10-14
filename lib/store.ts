@@ -1,7 +1,7 @@
 import { create } from 'zustand'
-import type { SkillTree, TreeNode, CanvasView } from '@/types/tree'
+import type { SkillTree, TreeNode, CanvasView, ChecklistItem } from '@/types/tree'
 import type { UserProfile } from '@/types/user'
-import { XP_PER_NODE } from '@/lib/utils'
+import { XP_PER_NODE, checklistKey } from '@/lib/utils'
 
 const LS_GLOBAL_XP = 'globalXp'
 
@@ -13,6 +13,23 @@ function readGlobalXp(): number {
 function saveGlobalXp(xp: number) {
   if (typeof window === 'undefined') return
   localStorage.setItem(LS_GLOBAL_XP, String(xp))
+}
+
+/** User-added checklist items, keyed by node id. */
+export type CustomChecklist = Record<string, ChecklistItem[]>
+
+/** Saves checklist state locally and to the server (guests stay on localStorage only). */
+function persistChecklist(treeId: string, checkedItemIds: string[], customItems: CustomChecklist) {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(`checklist:${treeId}`, JSON.stringify(checkedItemIds))
+    localStorage.setItem(`checklist-custom:${treeId}`, JSON.stringify(customItems))
+  }
+
+  fetch('/api/checklist', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ treeId, checkedItemIds, customItems }),
+  }).catch(() => {/* Non-critical */})
 }
 
 interface SkillTreeState {
@@ -29,6 +46,17 @@ interface SkillTreeState {
   setCompletedNodeIds: (ids: string[]) => void
   completeNode: (nodeId: string, treeId: string) => void
   uncompleteNode: (nodeId: string) => void
+
+  // Checklist progress — keys are `${nodeId}/${itemId}` (see checklistKey)
+  checkedItemIds: string[]
+  setCheckedItemIds: (ids: string[]) => void
+  toggleChecklistItem: (key: string, treeId: string) => void
+  customChecklist: CustomChecklist
+  setCustomChecklist: (items: CustomChecklist) => void
+  addChecklistItem: (nodeId: string, label: string, treeId: string) => void
+  removeChecklistItem: (nodeId: string, itemId: string, treeId: string) => void
+  /** Unchecks everything but keeps the user's own items. */
+  resetChecklist: (treeId: string) => void
 
   // Global XP — sum across all trees, persisted in localStorage
   // Hydrated from DB by UserMenu on mount; updated live by complete/uncomplete actions
@@ -109,6 +137,46 @@ export const useSkillTreeStore = create<SkillTreeState>((set, get) => ({
         body: JSON.stringify({ treeId, completedNodeIds: newIds }),
       }).catch(() => {/* Non-critical */})
     }
+  },
+
+  checkedItemIds: [],
+  setCheckedItemIds: (ids) => set({ checkedItemIds: ids }),
+
+  toggleChecklistItem: (key, treeId) => {
+    const prev = get().checkedItemIds
+    const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
+    set({ checkedItemIds: next })
+    persistChecklist(treeId, next, get().customChecklist)
+  },
+
+  customChecklist: {},
+  setCustomChecklist: (items) => set({ customChecklist: items }),
+
+  addChecklistItem: (nodeId, label, treeId) => {
+    const trimmed = label.trim()
+    if (!trimmed) return
+    const item: ChecklistItem = { id: `c-${Date.now().toString(36)}`, label: trimmed }
+    const prev = get().customChecklist
+    const next = { ...prev, [nodeId]: [...(prev[nodeId] ?? []), item] }
+    set({ customChecklist: next })
+    persistChecklist(treeId, get().checkedItemIds, next)
+  },
+
+  removeChecklistItem: (nodeId, itemId, treeId) => {
+    const prev = get().customChecklist
+    const remaining = (prev[nodeId] ?? []).filter((item) => item.id !== itemId)
+    const next = { ...prev }
+    if (remaining.length > 0) next[nodeId] = remaining
+    else delete next[nodeId]
+    const key = checklistKey(nodeId, itemId)
+    const checked = get().checkedItemIds.filter((k) => k !== key)
+    set({ customChecklist: next, checkedItemIds: checked })
+    persistChecklist(treeId, checked, next)
+  },
+
+  resetChecklist: (treeId) => {
+    set({ checkedItemIds: [] })
+    persistChecklist(treeId, [], get().customChecklist)
   },
 
   // Global XP — initialised from localStorage so it survives page refreshes

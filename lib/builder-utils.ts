@@ -1,4 +1,4 @@
-import type { SkillTree, TreeNode, TreeEdge, Resource } from '@/types/tree'
+import type { SkillTree, TreeNode, TreeEdge, Resource, ChecklistItem } from '@/types/tree'
 import type { Node, Edge } from '@xyflow/react'
 
 // ─── Custom zone ─────────────────────────────────────────────────────────────
@@ -21,6 +21,7 @@ export interface BuilderNodeData extends Record<string, unknown> {
   icon:        string
   zone:        string
   resources:   Resource[]
+  checklist?:  ChecklistItem[]
 }
 
 export interface BuilderMeta {
@@ -57,6 +58,7 @@ export function exportTree(
     icon:        n.data.icon,
     zone:        n.data.zone,
     resources:   n.data.resources,
+    ...exportChecklist(n.data.checklist),
     requires:    edges.filter(e => e.target === n.id).map(e => e.source),
   }))
 
@@ -79,6 +81,14 @@ export function exportTree(
     nodes:           treeNodes,
     edges:           treeEdges,
   }
+}
+
+/** Omits the field when empty and drops blank items, so trees without checklists stay unchanged. */
+export function exportChecklist(checklist: ChecklistItem[] | undefined): { checklist?: ChecklistItem[] } {
+  const items = (checklist ?? [])
+    .map(item => ({ ...item, label: item.label.trim() }))
+    .filter(item => item.label)
+  return items.length > 0 ? { checklist: items } : {}
 }
 
 // ─── Validation ───────────────────────────────────────────────────────────────
@@ -232,6 +242,7 @@ export function treeToDraft(tree: SkillTree): BuilderDraft {
       icon:        n.icon,
       zone:        n.zone,
       resources:   n.resources,
+      checklist:   n.checklist,
     },
   }))
 
@@ -284,6 +295,10 @@ export function newNodeId(): string {
 
 export function newResourceId(): string {
   return `res-${Math.random().toString(36).slice(2, 8)}`
+}
+
+export function newChecklistItemId(): string {
+  return `item-${Math.random().toString(36).slice(2, 8)}`
 }
 
 export function newEdgeId(source: string, target: string): string {

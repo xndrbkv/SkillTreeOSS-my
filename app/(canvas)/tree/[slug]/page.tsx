@@ -4,6 +4,7 @@ import { join } from 'path'
 import SkillCanvas from '@/components/canvas/SkillCanvas'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import type { SkillTree } from '@/types/tree'
+import type { CustomChecklist } from '@/lib/store'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -47,12 +48,14 @@ export default async function TreePage({ params }: Props) {
 
   // Load user progress + existing rating from Supabase if logged in
   let initialCompletedIds: string[] = []
+  let initialCheckedItemIds: string[] = []
+  let initialCustomChecklist: CustomChecklist = {}
   let userRating: number | null = null
   try {
     const supabase = await createServerSupabaseClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
-      const [progressResult, ratingResult] = await Promise.all([
+      const [progressResult, ratingResult, checklistResult] = await Promise.all([
         supabase
           .from('user_progress')
           .select('completed_node_ids')
@@ -65,9 +68,21 @@ export default async function TreePage({ params }: Props) {
           .eq('user_id', user.id)
           .eq('tree_id', slug)
           .single(),
+        supabase
+          .from('user_checklist')
+          .select('checked_item_ids, custom_items')
+          .eq('user_id', user.id)
+          .eq('tree_id', slug)
+          .single(),
       ])
       if (progressResult.data?.completed_node_ids) {
         initialCompletedIds = progressResult.data.completed_node_ids
+      }
+      if (checklistResult.data?.checked_item_ids) {
+        initialCheckedItemIds = checklistResult.data.checked_item_ids
+      }
+      if (checklistResult.data?.custom_items) {
+        initialCustomChecklist = checklistResult.data.custom_items
       }
       if (ratingResult.data?.rating) {
         userRating = ratingResult.data.rating
@@ -79,7 +94,13 @@ export default async function TreePage({ params }: Props) {
 
   return (
     <div className="w-full h-full">
-      <SkillCanvas tree={tree} initialCompletedIds={initialCompletedIds} userRating={userRating} />
+      <SkillCanvas
+        tree={tree}
+        initialCompletedIds={initialCompletedIds}
+        initialCheckedItemIds={initialCheckedItemIds}
+        initialCustomChecklist={initialCustomChecklist}
+        userRating={userRating}
+      />
     </div>
   )
 }

@@ -34,6 +34,11 @@ export function getNodeStatus(node: TreeNode, completedIds: string[]): NodeStatu
   return "locked"
 }
 
+/** Storage key for a checklist item — item ids are only unique within their node. */
+export function checklistKey(nodeId: string, itemId: string): string {
+  return `${nodeId}/${itemId}`
+}
+
 export function getProgressPercent(completedIds: string[], totalNodes: number): number {
   if (totalNodes === 0) return 0
   return Math.round((completedIds.length / totalNodes) * 100)

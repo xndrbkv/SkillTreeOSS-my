@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSkillTreeStore } from '@/lib/store'
-import { getNodeStatus, formatHours, getZoneColor } from '@/lib/utils'
+import { getNodeStatus, formatHours, getZoneColor, checklistKey } from '@/lib/utils'
 import type { SkillTree, TreeNode, Resource, ResourceType } from '@/types/tree'
 import { useState, useRef, useCallback, useMemo } from 'react'
 
@@ -227,6 +227,11 @@ export default function NodeSidebar({ tree, preview = false }: Props) {
               {/* ── Scrollable body ── */}
               <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 sm:py-5 space-y-6">
 
+                {/* Checklist — sub-topics the learner ticks off; outside preview anyone can add their own */}
+                {(!preview || (node.checklist?.length ?? 0) > 0) && (
+                  <NodeChecklist node={node} treeId={treeId} readOnly={preview} isCompleted={isCompleted} />
+                )}
+
                 {/* Resources */}
                 <ResourceList node={node} treeId={treeId} nodeId={node.id} preview={preview} />
 
@@ -438,6 +443,133 @@ function PrereqTimelineItem({ prereq, isLast, completedNodeIds, onNavigate, onHo
           arrow_forward
         </span>
       </button>
+    </div>
+  )
+}
+
+// ── NodeChecklist ──────────────────────────────────────────────────────────────
+
+function NodeChecklist({
+  node, treeId, readOnly, isCompleted,
+}: {
+  node: TreeNode
+  treeId: string
+  readOnly: boolean
+  isCompleted: boolean
+}) {
+  const {
+    checkedItemIds, toggleChecklistItem, customChecklist, addChecklistItem, removeChecklistItem,
+  } = useSkillTreeStore()
+  const [draft, setDraft] = useState('')
+
+  const ownItems = customChecklist[node.id] ?? []
+  const ownIds = new Set(ownItems.map((item) => item.id))
+  const items = [...(node.checklist ?? []), ...ownItems]
+  const doneCount = items.filter((item) => checkedItemIds.includes(checklistKey(node.id, item.id))).length
+  const allDone = items.length > 0 && doneCount === items.length
+
+  function handleAdd(e: React.FormEvent) {
+    e.preventDefault()
+    if (!draft.trim()) return
+    addChecklistItem(node.id, draft, treeId)
+    setDraft('')
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="flex items-center justify-between">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+          Checklist
+        </h3>
+        {items.length > 0 && (
+          <span className={`text-[11px] font-semibold tabular-nums ${allDone ? 'text-primary' : 'text-slate-500'}`}>
+            {doneCount} / {items.length}
+          </span>
+        )}
+      </div>
+
+      {/* Progress bar */}
+      {items.length > 0 && (
+        <div className="h-1.5 w-full rounded-full bg-white/[0.06] overflow-hidden">
+          <motion.div
+            className="h-full rounded-full bg-primary"
+            initial={false}
+            animate={{ width: `${(doneCount / items.length) * 100}%` }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+          />
+        </div>
+      )}
+
+      <ul className="flex flex-col gap-1">
+        {items.map((item) => {
+          const key = checklistKey(node.id, item.id)
+          const checked = checkedItemIds.includes(key)
+          const isOwn = ownIds.has(item.id)
+          return (
+            <li key={item.id} className="group/item flex items-start gap-1">
+              <button
+                type="button"
+                role="checkbox"
+                aria-checked={checked}
+                disabled={readOnly}
+                onClick={() => toggleChecklistItem(key, treeId)}
+                className="flex-1 flex items-start gap-3 px-2 py-2 rounded-lg text-left transition-colors hover:bg-white/[0.04] disabled:cursor-default disabled:hover:bg-transparent"
+              >
+                <span
+                  className={`mt-0.5 w-[18px] h-[18px] shrink-0 rounded-[5px] border flex items-center justify-center transition-colors ${checked
+                    ? 'bg-primary border-primary text-background-dark'
+                    : 'border-white/20 text-transparent'
+                    }`}
+                >
+                  <span className="material-symbols-outlined leading-none" style={{ fontSize: 14 }}>check</span>
+                </span>
+                <span className={`text-sm leading-snug transition-colors ${checked ? 'text-slate-500 line-through decoration-slate-600' : 'text-slate-200'}`}>
+                  {item.label}
+                </span>
+              </button>
+              {isOwn && !readOnly && (
+                <button
+                  type="button"
+                  aria-label={`Delete "${item.label}"`}
+                  onClick={() => removeChecklistItem(node.id, item.id, treeId)}
+                  className="shrink-0 min-w-[36px] min-h-[36px] flex items-center justify-center rounded-lg text-slate-600 hover:text-red-400 hover:bg-white/[0.04] transition-colors md:opacity-0 md:group-hover/item:opacity-100 focus-visible:opacity-100"
+                >
+                  <span className="material-symbols-outlined text-base leading-none">close</span>
+                </button>
+              )}
+            </li>
+          )
+        })}
+      </ul>
+
+      {/* Add your own item */}
+      {!readOnly && (
+        <form onSubmit={handleAdd} className="flex items-center gap-2">
+          <input
+            type="text"
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            placeholder="Add an item…"
+            maxLength={200}
+            className="flex-1 min-w-0 bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-primary/40 transition-colors"
+          />
+          <button
+            type="submit"
+            disabled={!draft.trim()}
+            aria-label="Add checklist item"
+            className="shrink-0 min-w-[40px] h-[38px] flex items-center justify-center rounded-lg bg-primary/15 border border-primary/30 text-primary hover:bg-primary/25 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <span className="material-symbols-outlined text-lg leading-none">add</span>
+          </button>
+        </form>
+      )}
+
+      {allDone && !isCompleted && !readOnly && (
+        <p className="text-xs text-primary/80 flex items-center gap-1.5">
+          <span className="material-symbols-outlined text-sm leading-none">task_alt</span>
+          All topics covered — you can mark this skill as completed.
+        </p>
+      )}
     </div>
   )
 }

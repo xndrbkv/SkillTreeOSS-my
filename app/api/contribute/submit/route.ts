@@ -30,6 +30,7 @@ export async function POST(request: NextRequest) {
       icon:        n.icon,
       zone:        n.zone,
       resources:   n.resources,
+      checklist:   n.checklist,
     },
   }))
 
